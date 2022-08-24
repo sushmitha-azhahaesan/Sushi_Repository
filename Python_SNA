@@ -1,0 +1,114 @@
+# importing libraries
+import pandas as pd
+import numpy
+#Reading the file and creating dataframe which is only published
+dataframe1 = pd.read_csv('/Users/sushmithaalagesan/Documents/On campus jobs/R@D/Social Network Analysis/Data_asu/asu-activities.csv',usecols=['published','campus_partners',
+                                                                                                                      'community_organizations'])
+df1=dataframe1[dataframe1["published"]==True]
+df1
+
+#stripping of thecurly braces
+df1=df1.drop(["published"], axis=1)
+df1=df1.assign(community_organizations=df1["community_organizations"].str.strip("{}"))
+df1=df1.assign(campus_partners=df1["campus_partners"].str.strip("{}"))
+df1
+
+#splitting up the rows as comma seperated
+df2=df1.assign(community_organizations=df1["community_organizations"].str.split(",")).explode("community_organizations")
+df2=df2.assign(campus_partners=df1["campus_partners"].str.split(",")).explode("campus_partners")
+df2
+
+#splitting up the rows as comma seperated
+df3=df2.assign(community_organizations=df2["community_organizations"].str.strip('""'))
+df4=df3.assign(campus_partners=df3["campus_partners"].str.strip('""'))
+
+#There are some data defects which is cleaned
+df4=df4[df4.community_organizations != " Inc."] 
+df4
+
+#There are some data defects which is cleaned
+df4=df4[df4.community_organizations != " Inc" ]
+df4
+
+#There are some data defects which is cleaned and droping null columns
+df4=df4[df4.community_organizations != " Inc" ]
+df4=df4.dropna()
+df4
+
+#creating a seperate data frame for removing duplicates-this is to segregate community_orgs and label them
+check= df4[['community_organizations']].copy()
+check['counts']=check[['community_organizations']].copy()
+
+check.rename(columns = {'community_organizations':'name'}, inplace = True)
+check=check.groupby('name').count()
+check
+check['name']=check.index
+check
+
+check['Label']="Community_org"
+check['Type']=1
+check
+
+#creating a seperate data frame for removing duplicates-this is to segregate community_orgs and label them
+check1= df4[['campus_partners']].copy()
+check1['counts']=check1[['campus_partners']].copy()
+
+check1.rename(columns = {'campus_partners':'name'}, inplace = True)
+check1
+check1=check1.groupby('name').count()
+check1['name']=check1.index
+check1
+
+check1['Label']="ASU_Unit"
+check1['Type']=2
+check1
+
+result = pd.concat([check, check1], ignore_index=True, sort=False)
+result['id']=result.index
+result
+
+# creation of Dictionary
+dict_1=dict(zip(result.name, result.id))
+dict_1
+
+#replacing names with Id for EDGE File Preparation
+df4.campus_partners = df4.campus_partners.replace(dict_1)
+df4.community_organizations = df4.community_organizations.replace(dict_1)
+df4
+
+#Detecting Weight
+count=df4.groupby(['campus_partners','community_organizations']).count()
+count
+df4['counts']=df4[['campus_partners']].copy()
+df4
+count=df4.groupby(['campus_partners','community_organizations']).count()
+count
+
+#sorting Index
+count=count.reset_index()
+count
+count=count.sort_values(by='counts', ascending=False)
+count
+
+#Loading to CSV
+count.to_csv(r'/Users/sushmithaalagesan/Documents/On campus jobs/R@D/Social Network Analysis/Data_asu/Edge_file_source.csv', index=True)
+
+# Picking up 25%
+len(count)
+a=1462/4
+df=count.head(int(a))
+df
+
+#Picking up the counts with is > than 1
+df=df[df['counts']>1]
+df
+
+#renaming Columns
+df.rename(columns = {'campus_partners':'from'}, inplace = True)
+df.rename(columns = {'community_organizations':'to'}, inplace = True)
+df.rename(columns = {'counts':'Weight'}, inplace = True)
+df
+
+#Loading to csv file
+df.to_csv(r'/Users/sushmithaalagesan/Documents/On campus jobs/R@D/Social Network Analysis/Data_asu/Edge_file_source_>1.csv', index=False)
+

@@ -1,0 +1,11 @@
+#Array-Brute force ,Sort,Hash_set(choosen due to efficient time complexity)
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        hashset=set()
+# Traversing all the elements in the list and checking it with hash set . If exist then return immediately elseadd to hash set      
+        for n in nums:
+            if n in hashset:
+                return True
+            else:
+                hashset.add(n)
+        return False

@@ -1,0 +1,46 @@
+Given two integer arrays nums1 and nums2, return an array of their intersection. Each element in the result must appear as many times as it shows in both arrays and you may return the result in any order.
+
+ 
+
+Example 1:
+
+Input: nums1 = [1,2,2,1], nums2 = [2,2]
+Output: [2,2]
+Example 2:
+
+Input: nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+Output: [4,9]
+Explanation: [9,4] is also accepted.
+
+Approach Hash Map
+
+O(m+n)
+
+
+===================================
+class Solution:
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        #creation of hashmap for temp storage of value with frequency table
+        dict={}
+        
+        # creation of list for storing the values
+        result=[]
+        
+        # comparing the given 2 arrays andd picking out the smaller one
+        if len(nums1) < len(nums2):
+            nums1,nums2=nums2,nums1  # small will be nums2
+            
+        #Frequency table for the smaller array
+        for num in nums2:
+            dict[num]=dict.get(num,0)+1
+            
+        #Traversing the larger array with the frequency table to check its avalilability
+        while nums1:
+            key=nums1.pop() #taking out the values from larger array
+            if key in dict and dict[key] > 0 :
+                result.append(key)
+                dict[key] -=1
+        return result        
+                
+                
+            

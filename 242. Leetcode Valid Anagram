@@ -1,0 +1,47 @@
+Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+ 
+
+Example 1:
+
+Input: s = "anagram", t = "nagaram"
+Output: true
+Example 2:
+
+Input: s = "rat", t = "car"
+Output: false
+==============================
+
+Alternative solution:
+return counter(s)==counter(t) # Better than the given solution . If interviewer asked more than one approach without in built function this will not work
+
+return sorted(s)==sorted(t) # Not a better solution due to O(nlogn) complexity .If interviewer asked more than one approach without in built function this will not work
+
+
+============================
+O(n) ---Time and space complexity O(n) , n-->s+t
+========================
+
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        # Compare the length of the Anagram , if not equal then retun false
+        if len(s) !=len(t):
+            return False
+        
+        # Generate frquency table for comparing,
+        dict_s={}
+        dict_t={}
+        
+        # Since both the dict has same length consider any one for fixing the range
+        for item in range(0,len(s)):
+            dict_s[s[item]] = dict_s.get(s[item],0)+1
+            dict_t[t[item]] = dict_t.get(t[item],0)+1
+            
+        # Checking both the dict
+        for item in dict_s:
+            if dict_s[item]!=dict_t.get(item,0):
+                return False
+        return True    
+                

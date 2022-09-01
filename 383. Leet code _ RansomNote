@@ -1,0 +1,44 @@
+Given two strings ransomNote and magazine, return true if ransomNote can be constructed by using the letters from magazine and false otherwise.
+
+Each letter in magazine can only be used once in ransomNote.
+
+ 
+
+Example 1:
+
+Input: ransomNote = "a", magazine = "b"
+Output: false
+Example 2:
+
+Input: ransomNote = "aa", magazine = "ab"
+Output: false
+Example 3:
+
+Input: ransomNote = "aa", magazine = "aab"
+Output: true
+
+
+====================================
+O(n) ---> n is the length of the string (time complexity,space complexity)
+
+=====================================
+
+class Solution:
+    def canConstruct(self, ransomNote: str, magazine: str) -> bool:
+        
+       
+        #creation of frequency table 
+        dict_m ={}
+        for i in range(len(magazine)):
+            dict_m[magazine[i]]=dict_m.get(magazine[i],0)+1  # for string it has to be given dictionary[string[index]] --> to getvalue
+            
+        #checking all the characters of ransonNote aganist generated magazines freq table
+        for i in range(len(ransomNote)):
+            if ransomNote[i] not in dict_m :    
+                return False
+            elif (dict_m[ransomNote[i]]==0):
+                return False
+            else:
+                dict_m[ransomNote[i]]-=1   # decrementing the count once visited
+        return True
+        

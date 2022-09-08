@@ -1,0 +1,35 @@
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        dic={}
+        
+        # This method is by sorting with takes lot of time complexity , better is
+        # Using Hash map
+        # sort it them form a dictionay{sorted_value:[list of original value],.....}(add as a list in it)
+        for string in strs:
+            sort="".join(sorted(string))
+            if sort in dic:
+                dic[sort]+=[string]
+            else:
+                dic[sort]=[string]
+            
+        return dic.values()
+        =================================================================
+        class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        # create a default dict to avoid runtime errors
+        #defaultdict---> It wont throw error if the non available keys are triggered
+        # since we wnat the values in the form of list we neet to give as list
+        dic=defaultdict(list)
+        #Taking every element from the list ie, eat....
+        #creating a key which has 26 0's
+        for s in strs:
+            count=[0]*26
+            
+            #for every character place 1 in place of 0
+            # for ace , the value is 10101000000....
+            for c in s:
+                count[ord(c)-ord("a")]+=1
+                # since key values shld be immutable place it in tuple and append 
+            dic[tuple(count)].append(s)
+             
+        return dic.values() 

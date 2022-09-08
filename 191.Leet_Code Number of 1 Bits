@@ -1,0 +1,37 @@
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        """ There are ablout 2 approaches for this problem
+        The first one takes all 32 bits
+        while loop is introduced 
+        Mod operation is performed for last significant bit for enry iteration
+        By using next shift operation >> 1 digit is moved to right 
+        n=7
+        111
+        011
+        001
+        Mod is done to count 1 """
+        c=0
+        
+        """while n:
+            c=c+(n%2)
+            n=n >> 1
+        return c """
+        
+    """ This approach iterates just from the position the number 1 starts . For example. for n=7 , 111---> only 3 times the loop runs
+    111
+    110(7-1=6)
+    ------
+    110
+    101(6-1=5)
+    ------
+    100
+    011(5-4=3).
+    ------
+    000
+    By using this logic for every itertion 1 is removed and for 10000000 it Runs only 8 times and not 32 times
+    """   
+        while n:
+            n=n&(n-1)
+            c+=1
+            
+        return c

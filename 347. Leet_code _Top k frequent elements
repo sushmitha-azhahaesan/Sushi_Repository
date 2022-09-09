@@ -1,0 +1,37 @@
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        """
+        there are about 2 approaches for this problem
+        1. creating a frequency table using dictionaries,
+        2. using heap methods or (selected) by using bucket sort(creating a list
+        and then making the frequency count as index and its values as the numbers what we get
+        n=[1,1,1,2,2,3] , k=2
+        index  :0 1 2 3 4 5 6. (len=n+1) occurance times 
+        values :  3 2 1
+        )
+        By using this method we can solve in O(n)
+        """
+        # creation of dictionary for frequency table
+        dic={}
+        
+        # creation of list for bucket sort whose length will be equal to the length of the input array
+        freq=[[] for i in range(len(nums)+1)]
+        
+        # creation of frequency table
+        for i in nums:
+            dic[i]=dic.get(i,0)+1
+        # creation of array for bucket sort
+        for n,c in dic.items():
+            freq[c].append(n)
+        
+        #creating list for result values
+        res=[]
+        # this traverse the array from last
+        for i in range(len(freq)-1,0,-1):
+            # accessing  the number from the index
+            for n in freq[i]: 
+                res.append(n)
+                # We need only the numbers returned in K
+                if len(res)==k:
+                    return res
+        

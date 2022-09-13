@@ -1,0 +1,8 @@
+# Lamda, in-place function, anonymous function
+# sorts the list with the element passed by 
+
+Given=[[1,2],[1,3],[3,2],[1,5]]
+function=sorted(Given,key=lambda x: x[1])
+print(function)
+
+

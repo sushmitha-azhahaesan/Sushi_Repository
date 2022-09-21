@@ -1,0 +1,31 @@
+'''
+ since must write an algorithm that runs in O(n) time and without using the division operation and solve the problem in O(1) extra space complexity? (The output array does not count as extra space for space complexity analysis.)
+ 
+ [1,2,3,4]---.n
+      -----> 1(prefix) ,prefix*1=1, prefix*2=2, prefix*3=6 
+ [1,1,2,6]--K
+      ------>1(postfix),post*6(k)=6 {post=1*4(n)}
+                        post*2(K)=8 {post=4*3(n)}
+                        post*1(k)=12 {post=12*2(n)}
+                        post*1(K)=24 '''
+
+
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        # creating an array of particular length
+        res=[1] * len(nums)
+        # creating prfix and postfix variable to 1
+        prefix=1
+        # updating,Multiplying and storing all the prefix and updating the prefix variable
+        for i in range(len(nums)):
+            res[i]=prefix
+            prefix *=nums[i]
+        #print(res) 
+        # Multiplying, updating and storing all the prefix and updating the prefix variable
+        postfix=1
+        for i in range(len(nums)-1,-1,-1):
+            res[i] *=postfix
+            postfix *=nums[i]
+        #print(res) 
+        return res
+            

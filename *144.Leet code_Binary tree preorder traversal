@@ -35,13 +35,41 @@ Recursion:
    [3],6()
    [6],[],[]
    [7],[] [] ------>[6,7] --->[3,6,7]-->[1,2,4,5,3,6,7]
+   
+Iteration:
+  In Iteration we use stach which is push and pop. As stack is last in first out for easy accessing of left elements we folllow root-->right--Left
+  when left is poped , it will be printed
+  stack=[1] // intially root will be in stack
+   res=[]     // elements poped from stack will be inserted in res
+   
+   stack=[], res=[1], stack=[3,2]   
+   stack=[3] , res=[1,2], stack=[3,5,4]
+   stack=[3,5] , res=[1,2,4] , stack=[3,5]
+   stack=[3], res=[1,2,4,5] , stack=[3,7,6]
+   stack=[], res=[1,2,4,5,3] , stack=[7,6]
+   stack=[7] , res=[1,2,4,5,3,6] , stack=[7]
+   stack=[]   ,res=[1,2,4,5,3,6,7] , stack=[]
+  
 '''
 class Solution:
     def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         #base case
+        # if root is None:
+        #     return []
+        # #recursive case [] for root.val since we r returning list of numbers
+        # else:
+        #     return [root.val] + self.preorderTraversal(root.left) +self.preorderTraversal(root.right)
+        stack=[root]
+        res=[]
         if root is None:
             return []
-        #recursive case [] for root.val since we r returning list of numbers
-        else:
-            return [root.val] + self.preorderTraversal(root.left) +self.preorderTraversal(root.right)
-        
+        while stack !=[]:
+            root=stack.pop()
+            res.append(root.val)
+            if root.right is not None:
+                stack.append(root.right)
+            if root.left is not None:
+                stack.append(root.left)
+        return res         
+            
+      

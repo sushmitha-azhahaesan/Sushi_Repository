@@ -27,7 +27,7 @@ Recursion:
    [2],4()
    [4],[],[]
    
-   right of 4 -->5
+   right of 2 -->5
    5()-->[],[]
    [5]
    [4,5]-->[2,4,5]-->[1,2,4,5]
@@ -59,6 +59,7 @@ class Solution:
         # #recursive case [] for root.val since we r returning list of numbers
         # else:
         #     return [root.val] + self.preorderTraversal(root.left) +self.preorderTraversal(root.right)
+        ===================================
         stack=[root]
         res=[]
         if root is None:

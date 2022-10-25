@@ -39,9 +39,8 @@ class Solution:
             dict_s[s[item]] = dict_s.get(s[item],0)+1
             dict_t[t[item]] = dict_t.get(t[item],0)+1
             
-        # Checking both the dict
-        for item in dict_s:
-            if dict_s[item]!=dict_t.get(item,0):
-                return False
-        return True    
+ # Checking both the dict
+        if (dict_s==dict_t):
+            return True
+        return False
                 

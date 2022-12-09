@@ -5,9 +5,9 @@ class Solution:
         1. creating a frequency table using dictionaries,
         2. using heap methods or (selected) by using bucket sort(creating a list
         and then making the frequency count as index and its values as the numbers what we get
-        n=[1,1,1,2,2,3] , k=2
-        index  :0 1 2 3 4 5 6. (len=n+1) occurance times 
-        values :  3 2 1
+        n=[1,1,1,2,2,3,1,4] , k=2
+        index  :0 1   2 3 4 5 6 7 8. (len=n+1) occurance times 
+        values :  3,4 2   1
         )
         By using this method we can solve in O(n)
         """
